@@ -1,0 +1,19 @@
+{
+  "categories": [
+    { "id": "vjezba",   "label": "Exercise",   "icon": "ti-run",       "color": "blue"   },
+    { "id": "skola",    "label": "School",     "icon": "ti-book",      "color": "purple" },
+    { "id": "zdravlje", "label": "Health",     "icon": "ti-heart",     "color": "teal"   },
+    { "id": "hobi",     "label": "Hobbies",    "icon": "ti-palette",   "color": "amber"  },
+    { "id": "posao",    "label": "Work",       "icon": "ti-briefcase", "color": "gray"   },
+    { "id": "ucenje",   "label": "Learning",   "icon": "ti-brain",     "color": "coral"  },
+    { "id": "projekti", "label": "Projects",   "icon": "ti-stack-2",   "color": "pink"   },
+    { "id": "sport",    "label": "Sport",      "icon": "ti-trophy",    "color": "amber"  },
+    { "id": "socijalno","label": "Social",     "icon": "ti-users",     "color": "teal"   }
+  ],
+  "xpValues": {
+    "easy":   25,
+    "medium": 50,
+    "hard":   100
+  },
+  "levelThreshold": 500
+}

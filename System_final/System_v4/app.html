@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <span class="nav__logo">SYSTEM</span>
+    <div class="nav__links">
+      <a href="app.html"         class="nav__link active">today</a>
+      <a href="calendar.html"    class="nav__link">calendar</a>
+      <a href="stats.html"       class="nav__link">stats</a>
+      <a href="leaderboard.html" class="nav__link">leaderboard</a>
+    </div>
+    <div class="nav__right">
+      <div class="nav__clock" id="navClock">—</div>
+      <button class="nav__account" id="accountBtn">
+        <i class="ti ti-user" aria-hidden="true"></i>
+        <span id="navUsername">—</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- header -->
+    <div class="page-header">
+      <div class="page-header__left">
+        <div class="page-header__greeting" id="greeting">good morning</div>
+        <div class="page-header__name" id="username">—</div>
+      </div>
+      <div class="page-header__right">
+        <div class="page-header__label">rank</div>
+        <div class="page-header__level" id="rankDisplay">E-RANK</div>
+        <div class="page-header__label" style="margin-top:4px;">level</div>
+        <div class="page-header__level" id="levelDisplay">LVL 1</div>
+      </div>
+    </div>
+
+    <!-- system message -->
+    <div class="system-message" id="systemMessage">
+      <span class="system-message__tag">[SYSTEM]</span>
+      <span class="system-message__text" id="systemMessageText"></span>
+    </div>
+
+    <!-- quest completed -->
+    <div class="quest-complete" id="questComplete">
+      <p>— quest completed —</p>
+    </div>
+
+    <!-- xp card -->
+    <div class="card">
+      <div class="xp-header">
+        <div class="xp-header__left">
+          <div class="stat-label">total xp</div>
+          <div class="stat-value" id="xpDisplay">0 <span class="stat-value__sub">/ 500</span></div>
+        </div>
+        <div class="xp-header__right">
+          <div class="stat-label">streak</div>
+          <div class="stat-value stat-value--blue" id="streakValue">
+            <i class="ti ti-flame streak-flame" id="streakFlame" aria-hidden="true"></i>
+            <span id="streakDisplay">0</span> days
+          </div>
+        </div>
+      </div>
+      <div class="xp-bar-bg">
+        <div class="xp-bar" id="xpBar" style="width:0%"></div>
+      </div>
+      <div class="xp-levels">
+        <span class="xp-levels__from" id="lvlFrom">LVL 1</span>
+        <span class="xp-levels__to"   id="lvlTo">LVL 2</span>
+      </div>
+      <div class="streak-dots" id="streakDots"></div>
+    </div>
+
+    <!-- metrics + circular progress -->
+    <div class="dashboard-row">
+      <div class="metrics metrics--compact">
+        <div class="metric">
+          <div class="metric__label">xp today</div>
+          <div class="metric__value blue" id="todayXp">+0</div>
+        </div>
+        <div class="metric">
+          <div class="metric__label">categories</div>
+          <div class="metric__value" id="catCount">0</div>
+        </div>
+      </div>
+
+      <!-- circular progress -->
+      <div class="circle-progress-wrap">
+        <svg class="circle-progress" viewBox="0 0 80 80" aria-hidden="true">
+          <circle class="circle-bg"    cx="40" cy="40" r="32"/>
+          <circle class="circle-track" cx="40" cy="40" r="32" id="circleTrack"/>
+        </svg>
+        <div class="circle-progress__inner">
+          <div class="circle-progress__pct" id="circlePct">0%</div>
+          <div class="circle-progress__label">TODAY</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- tasks -->
+    <div class="card">
+      <div class="card__label">today's tasks</div>
+      <div id="taskList"></div>
+      <button class="btn-add" id="addTaskBtn">
+        <i class="ti ti-plus" aria-hidden="true"></i> add task
+      </button>
+    </div>
+
+  </main>
+
+  <!-- add task modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <h2>new quest</h2>
+
+      <div class="form-group">
+        <label>quest name</label>
+        <input type="text" id="taskInput" placeholder="what do you need to do..." autocomplete="off" />
+        <span class="form-error" id="taskError"></span>
+      </div>
+
+      <div class="form-group">
+        <label>select type</label>
+        <div class="cat-chips" id="catChips"></div>
+        <span class="form-error" id="catChipError"></span>
+      </div>
+
+      <div class="form-group">
+        <label>difficulty</label>
+        <div class="difficulty-btns">
+          <button class="diff-btn active" data-d="easy">easy +25</button>
+          <button class="diff-btn"        data-d="medium">medium +50</button>
+          <button class="diff-btn"        data-d="hard">hard +100</button>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" id="cancelBtn">cancel</button>
+        <button class="btn-primary btn-primary--flex btn-primary--locked" id="confirmBtn" disabled>
+          add quest <i class="ti ti-check" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- account modal -->
+  <div class="modal-backdrop" id="accountBackdrop">
+    <div class="modal">
+      <h2>profile</h2>
+
+      <div class="profile-header">
+        <div class="lb-avatar profile-avatar" id="accountAvatar">?</div>
+        <div>
+          <div class="profile-name" id="accountName">—</div>
+          <div class="profile-level" id="accountLevel">LVL 1</div>
+        </div>
+      </div>
+
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <span class="profile-stat__label">total XP</span>
+          <span class="profile-stat__value profile-stat__value--blue" id="accountXp">0</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat__label">rank</span>
+          <span class="profile-stat__value profile-stat__value--blue" id="accountRank">E-RANK</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat__label">streak</span>
+          <span class="profile-stat__value" id="accountStreak">0 days</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat__label">member since</span>
+          <span class="profile-stat__value" id="accountCreated">—</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat__label">categories</span>
+          <span class="profile-stat__value profile-stat__value--muted" id="accountCats">—</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" id="accountCloseBtn">close</button>
+        <button class="btn-primary btn-primary--flex btn-primary--danger" id="logoutBtn">
+          logout <i class="ti ti-logout" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- level up overlay -->
+  <div class="levelup-overlay" id="levelupOverlay">
+    <div class="levelup-box">
+      <h2>level up</h2>
+      <div class="lvl-num" id="levelupNum">2</div>
+      <p>click anywhere to continue</p>
+    </div>
+  </div>
+
+  <!-- rank up overlay -->
+  <div class="levelup-overlay" id="rankupOverlay">
+    <div class="levelup-box">
+      <h2>rank up</h2>
+      <div class="lvl-num lvl-num--rank" id="rankupLabel">D-RANK</div>
+      <p>click anywhere to continue</p>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

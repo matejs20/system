@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+
+<body>
+
+  <div class="system-grid"></div>
+  <div class="system-glow"></div>
+
+  <div id="app"></div>
+
+  <main class="onboarding">
+
+    <div class="onboarding__header">
+      <h1 class="onboarding__title">SYSTEM</h1>
+      <p class="onboarding__sub">> initialize your profile...</p>
+    </div>
+
+    <div id="step1">
+      <div class="form-group">
+        <label for="username">player name</label>
+
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="username"
+            placeholder="enter name..."
+            autocomplete="off"
+          />
+        </div>
+
+        <span class="form-error" id="usernameError"></span>
+      </div>
+
+      <button class="btn-primary" id="nextBtn">
+        next <i class="ti ti-arrow-right"></i>
+      </button>
+    </div>
+
+    <div id="step2" style="display:none;">
+      <div class="form-group">
+
+        <label>
+          select categories
+          <span class="form-hint">(min. 2)</span>
+        </label>
+
+        <div class="category-grid" id="categoryGrid"></div>
+
+        <span class="form-error" id="categoryError"></span>
+      </div>
+
+      <button class="btn-primary" id="submitBtn">
+        START SYSTEM <i class="ti ti-power"></i>
+      </button>
+    </div>
+
+  </main>
+
+  <div id="loadingOverlay" class="matrix-overlay" style="display: none;">
+    <canvas id="matrixCanvas"></canvas>
+    <div class="matrix-content">
+      <div id="matrixStatus" class="matrix-status-text"></div>
+      <h2 id="welcomeText" class="matrix-welcome"></h2>
+    </div>
+  </div>
+
+  <script type="module" src="./js/onboarding.js"></script>
+
+</body>
+</html>

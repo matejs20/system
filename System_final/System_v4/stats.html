@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System — Stats</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <span class="nav__logo">SYSTEM</span>
+    <div class="nav__links">
+      <a href="app.html"         class="nav__link">today</a>
+      <a href="calendar.html"    class="nav__link">calendar</a>
+      <a href="stats.html"       class="nav__link active">stats</a>
+      <a href="leaderboard.html" class="nav__link">leaderboard</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- weekly review -->
+    <div class="card" id="weeklyReview" style="display:none;">
+      <div class="card__icon-header">
+        <i class="ti ti-calendar-stats" aria-hidden="true"></i>
+        <span class="card__label">weekly review</span>
+      </div>
+      <div id="weeklyContent"></div>
+    </div>
+
+    <!-- summary metrics -->
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric__label">total xp</div>
+        <div class="metric__value blue" id="totalXp">0</div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">level</div>
+        <div class="metric__value" id="totalLevel">1</div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">active days</div>
+        <div class="metric__value" id="activeDays">0</div>
+      </div>
+    </div>
+
+    <!-- xp this week chart -->
+    <div class="card">
+      <div class="card__label">xp this week</div>
+      <div class="chart-bars" id="weekChart"></div>
+      <div class="chart-labels" id="weekLabels"></div>
+    </div>
+
+    <!-- best day -->
+    <div class="card">
+      <div class="card__label">best day</div>
+      <div id="bestDay">—</div>
+    </div>
+
+    <!-- categories breakdown -->
+    <div class="card">
+      <div class="card__label">by category</div>
+      <div id="catBreakdown"></div>
+    </div>
+
+  </main>
+
+  <script type="module" src="js/stats.js"></script>
+</body>
+</html>

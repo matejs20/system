@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System — Leaderboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <span class="nav__logo">SYSTEM</span>
+    <div class="nav__links">
+      <a href="app.html"         class="nav__link">today</a>
+      <a href="calendar.html"    class="nav__link">calendar</a>
+      <a href="stats.html"       class="nav__link">stats</a>
+      <a href="leaderboard.html" class="nav__link active">leaderboard</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- header -->
+    <div class="page-header">
+      <div class="page-header__left">
+        <div class="page-header__greeting">global</div>
+        <div class="page-header__name">leaderboard</div>
+      </div>
+      <button class="btn-secondary btn-secondary--auto" id="refreshBtn">
+        <i class="ti ti-refresh" aria-hidden="true"></i>
+        refresh
+      </button>
+    </div>
+
+    <!-- my rank card -->
+    <div class="card card--highlight" id="myRankCard">
+      <div class="card__label">your position</div>
+      <div class="lb-row lb-row--me">
+        <div class="lb-rank lb-rank--me" id="myRank">—</div>
+        <div class="lb-avatar" id="myAvatar">?</div>
+        <div class="lb-info">
+          <div class="lb-name" id="myName">—</div>
+          <div class="lb-lvl" id="myLevel">LVL 1</div>
+        </div>
+        <div class="lb-xp lb-xp--large" id="myXp">0 XP</div>
+      </div>
+    </div>
+
+    <!-- loading -->
+    <div id="loadingState" class="empty-state">
+      <i class="ti ti-loader" aria-hidden="true"></i>
+      loading...
+    </div>
+
+    <!-- error -->
+    <div id="errorState" class="empty-state" style="display:none;">
+      <i class="ti ti-wifi-off" aria-hidden="true"></i>
+      error loading leaderboard
+    </div>
+
+    <!-- leaderboard list -->
+    <div class="card" id="lbCard" style="display:none;">
+      <div class="card__label">top players</div>
+      <div id="lbList"></div>
+    </div>
+
+    <!-- empty -->
+    <div id="emptyState" style="display:none;">
+      <div class="empty-state">
+        <i class="ti ti-users" aria-hidden="true"></i>
+        <p>no players on the leaderboard yet</p>
+      </div>
+    </div>
+
+  </main>
+
+  <script type="module" src="js/leaderboard.js"></script>
+</body>
+</html>

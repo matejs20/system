@@ -1,0 +1,1680 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:            #03070a; /* Malo dublja crna za bolji kontrast s neonom */
+  --bg-card:       #060d14;
+  --bg-hover:      #0b1622;
+  --border:        #0f2238;
+  --border-bright: #1b3d5c;
+  --blue:          #00b4ff;
+  --blue-dim:      #0070aa;
+  --blue-glow:     rgba(0, 180, 255, 0.08);
+  --blue-glow-intense: 0 0 15px rgba(0, 180, 255, 0.35), 0 0 30px rgba(0, 180, 255, 0.15);
+  --purple:        #7F77DD;
+  --purple-dim:    #3C3489;
+  --teal:          #00e5a0;
+  --amber:         #ffb830;
+  --coral:         #ff5733;
+  --pink:          #D4537E;
+  --gray:          #4a6070;
+  --text:          #c8dce8;
+  --text-bright:   #e8f4ff;
+  --text-muted:    #3a6080;
+  --text-dim:      #1a3048;
+  --radius-sm:     3px;  /* Oštriji kutovi za taktički sci-fi izgled */
+  --radius-md:     5px;
+  --radius-lg:     8px;
+  --mono: 'Share Tech Mono', monospace;
+  --display: 'Rajdhani', sans-serif;
+}
+
+/* ── SCANLINE + GRID BACKGROUND ── */
+body {
+  font-family: var(--display);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,180,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,180,255,0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.12) 2px,
+    rgba(0,0,0,0.12) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Osiguraj da je sav sadržaj iznad pozadinske mreže */
+body > * { 
+  position: relative; 
+  z-index: 1; 
+}
+
+/* ── ONBOARDING MODUL ── */
+.onboarding {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 10vh 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.onboarding__header {
+  margin-bottom: 3.5rem;
+  text-align: center;
+}
+
+.onboarding__title {
+  font-family: var(--mono);
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--blue);
+  text-shadow: 0 0 20px rgba(0, 180, 255, 0.4), 0 0 50px rgba(0, 180, 255, 0.15);
+  display: inline-block;
+}
+
+.onboarding__title::after {
+  content: '_';
+  animation: blink 1.1s step-end infinite;
+  color: var(--blue);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.onboarding__sub {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.onboarding__sub::before {
+  content: '> ';
+  color: var(--blue);
+}
+
+/* ── FORME I INPUT POLJA (Sistemski Terminal) ── */
+.form-group {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  transition: color 0.25s ease;
+}
+
+.form-group:focus-within label {
+  color: var(--blue);
+}
+
+.form-hint {
+  color: var(--text-muted);
+  opacity: 0.7;
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  background: rgba(8, 15, 23, 0.6);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue-dim);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 12px 16px;
+  color: var(--text-bright);
+  font-size: 15px;
+  font-family: var(--mono);
+  outline: none;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.form-group input[type="text"]:focus {
+  border-color: var(--blue);
+  border-left-color: var(--blue);
+  background: var(--bg-hover);
+  box-shadow: 0 0 15px rgba(0, 180, 255, 0.15), inset 0 0 15px rgba(0, 180, 255, 0.05);
+}
+
+.form-group input[type="text"]::placeholder {
+  color: #223a52;
+}
+
+.form-error {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--coral);
+  margin-top: 8px;
+  min-height: 18px;
+  letter-spacing: 0.05em;
+}
+
+.form-error:not(:empty)::before {
+  content: '[!] ';
+  font-weight: 700;
+}
+
+/* ── KATEGORIJSKA MREŽA ── */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+.category-btn {
+  background: rgba(8, 15, 23, 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.category-btn i {
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.category-btn:hover {
+  border-color: var(--border-bright);
+  color: var(--text-bright);
+  background: var(--bg-hover);
+  transform: translateY(-2px);
+}
+
+.category-btn:hover i {
+  transform: scale(1.15);
+}
+
+.category-btn.active {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: rgba(0, 180, 255, 0.08);
+  box-shadow: 0 0 12px rgba(0, 180, 255, 0.1), inset 0 0 15px rgba(0, 180, 255, 0.05);
+  font-weight: 700;
+}
+
+.category-btn.active::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 6px; height: 6px;
+  background: var(--blue);
+  box-shadow: 0 0 8px var(--blue);
+}
+
+/* ── SUSTAVNI GUMBI ── */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  border: 1px solid var(--blue-dim);
+  border-radius: var(--radius-md);
+  color: var(--blue);
+  font-size: 14px;
+  font-family: var(--mono);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  transition: all 0.25s ease-out;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 180, 255, 0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.btn-primary:hover {
+  border-color: var(--blue);
+  color: var(--text-bright);
+  box-shadow: var(--blue-glow-intense), inset 0 0 15px rgba(0, 180, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.btn-primary:hover::before { opacity: 1; }
+.btn-primary:active { transform: scale(0.98); }
+
+/* ── NAVIGACIJA (Mračni Sci-Fi Blur) ── */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(3, 7, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 100;
+}
+
+.nav__logo {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  color: var(--blue);
+  text-shadow: 0 0 15px rgba(0, 180, 255, 0.4);
+}
+
+.nav__logo::before { content: '[ '; color: var(--text-muted); opacity: 0.5; }
+.nav__logo::after  { content: ' ]'; color: var(--text-muted); opacity: 0.5; }
+
+.nav__links {
+  display: flex;
+  gap: 6px;
+}
+
+.nav__link {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav__link:hover {
+  color: var(--text-bright);
+  background: var(--bg-hover);
+  border-color: var(--border);
+}
+
+.nav__link.active {
+  color: var(--blue);
+  background: rgba(0, 180, 255, 0.05);
+  border-color: rgba(0, 180, 255, 0.2);
+}
+
+/* Gumb za profil u navigaciji */
+.nav__account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav__account:hover {
+  border-color: var(--blue-dim);
+  color: var(--blue);
+  background: var(--blue-glow);
+  box-shadow: 0 0 8px rgba(0, 180, 255, 0.1);
+}
+
+/* ── LAYOUT KONTEJNER ── */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ── KARTICE / MODULI (Holografski stil) ── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Gornja svjetleća linija kartice */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-bright), var(--blue-dim), var(--border-bright), transparent);
+  opacity: 0.8;
+}
+
+/* ── XP TRKALIŠTE (Energy Progress Bar) ── */
+.xp-bar-bg {
+  background: rgba(11, 22, 34, 0.8);
+  border-radius: 3px;
+  height: 6px;
+  margin-top: 12px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(15, 32, 53, 0.5);
+}
+
+.xp-bar {
+  background: linear-gradient(90deg, var(--blue-dim), var(--blue));
+  border-radius: 2px;
+  height: 100%;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px var(--blue);
+  position: relative;
+}
+
+/* Svjetleća jezgra na rubu napretka */
+.xp-bar::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 6px;
+  background: #fff;
+  box-shadow: 0 0 12px #fff, 0 0 20px var(--blue);
+}
+
+/* ── METRIKA / STATISTIČKI REDOVI ── */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.metric {
+  background: rgba(8, 15, 23, 0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.metric:hover {
+  border-color: var(--border-bright);
+}
+
+.metric::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+}
+
+.metric__label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.metric__value {
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--text-bright);
+  line-height: 1;
+}
+
+.metric__value.blue { 
+  color: var(--blue); 
+  text-shadow: 0 0 10px rgba(0, 180, 255, 0.3); 
+}
+
+/* ── AKTIVNI ZADACI / QUESTOVI ── */
+.task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 6px;
+  border-bottom: 1px solid rgba(15, 32, 53, 0.4);
+  transition: all 0.2s ease;
+}
+
+.task:last-of-type { border-bottom: none; }
+
+.task:hover {
+  background: rgba(0, 180, 255, 0.015);
+}
+
+/* Kvačica kao sistemski checkbox */
+.task__check {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  border: 1px solid var(--border-bright);
+  background: rgba(5, 10, 15, 0.6);
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.task__check:hover {
+  border-color: var(--blue);
+  box-shadow: 0 0 8px rgba(0, 180, 255, 0.2);
+}
+
+.task__check.done {
+  background: rgba(0, 180, 255, 0.15);
+  border-color: var(--blue);
+  box-shadow: 0 0 8px rgba(0, 180, 255, 0.2), inset 0 0 6px rgba(0, 180, 255, 0.2);
+}
+
+.task__check i {
+  display: none;
+  font-size: 11px;
+  color: var(--blue);
+  text-shadow: 0 0 4px var(--blue);
+}
+
+.task__check.done i { 
+  display: block; 
+}
+
+.task__cat {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.task__text {
+  flex: 1;
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+
+.task__text.done {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task__xp {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--blue);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ── BOJE KATEGORIJA (Tehnički tonovi s prozirnošću) ── */
+.cat-vjezba   { background: rgba(0, 180, 255, 0.08); color: #00b4ff; border: 1px solid rgba(0, 180, 255, 0.25); }
+.cat-skola    { background: rgba(127, 119, 221, 0.08); color: #938be9; border: 1px solid rgba(127, 119, 221, 0.25); }
+.cat-zdravlje { background: rgba(0, 229, 160, 0.08); color: #00e5a0; border: 1px solid rgba(0, 229, 160, 0.25); }
+.cat-hobi     { background: rgba(255, 184, 48, 0.08); color: #ffb830; border: 1px solid rgba(255, 184, 48, 0.25); }
+.cat-posao    { background: rgba(74, 96, 112, 0.12); color: #a4c2d5; border: 1px solid rgba(74, 96, 112, 0.3); }
+.cat-ucenje   { background: rgba(255, 87, 51, 0.08); color: #ff7356; border: 1px solid rgba(255, 87, 51, 0.25); }
+.cat-projekti { background: rgba(212, 83, 126, 0.08); color: #e26d94; border: 1px solid rgba(212, 83, 126, 0.25); }
+
+/* ── STREAK TOČKICE (Aktivni tjedni tracking) ── */
+.streak-dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.streak-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+
+.streak-dot.done { 
+  background: var(--blue-dim); 
+  border-color: var(--blue-dim); 
+  box-shadow: 0 0 6px rgba(0, 112, 170, 0.4); 
+}
+.streak-dot.today { 
+  background: var(--blue); 
+  border-color: var(--blue); 
+  box-shadow: 0 0 10px var(--blue); 
+  animation: pulseToday 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulseToday {
+  0% { opacity: 0.7; box-shadow: 0 0 4px var(--blue); }
+  100% { opacity: 1; box-shadow: 0 0 12px var(--blue); }
+}
+
+/* ── GUMB ZA DODAVANJE ZADATAKA ── */
+.btn-add {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border-bright);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.btn-add:hover {
+  border-color: var(--blue-dim);
+  color: var(--blue);
+  background: rgba(0, 180, 255, 0.02);
+}
+
+/* ── EMPTY STATE & OBAVIJESTI ── */
+.empty-state {
+  text-align: center;
+  padding: 2.5rem 0;
+  color: var(--text-muted);
+}
+
+.empty-state i {
+  font-size: 32px;
+  margin-bottom: 12px;
+  display: block;
+  color: var(--text-dim);
+}
+
+.empty-state p {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}
+
+.quest-complete {
+  text-align: center;
+  padding: 12px;
+  border: 1px solid rgba(0, 229, 160, 0.3);
+  border-radius: var(--radius-md);
+  background: rgba(0, 229, 160, 0.06);
+  margin-bottom: 14px;
+  display: none;
+}
+
+.quest-complete.show { 
+  display: block; 
+  animation: levelup-pop 0.3s ease;
+}
+
+.quest-complete p {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(0, 229, 160, 0.4);
+}
+
+/* ── LEVEL UP OVERLAY (Sistemski Proboj) ── */
+.levelup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 10, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.levelup-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.levelup-box {
+  text-align: center;
+}
+
+.levelup-box h2 {
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0.4em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.levelup-box .lvl-num {
+  font-family: var(--mono);
+  font-size: 96px;
+  font-weight: 700;
+  color: var(--blue);
+  line-height: 1;
+  text-shadow: 0 0 30px var(--blue), 0 0 70px rgba(0, 180, 255, 0.4);
+}
+
+.levelup-box p {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--teal);
+  margin-top: 16px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@keyframes levelup-pop {
+  0%   { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── MODALNI PROZORI (Sistemski Override) ── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 10, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-backdrop.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 1rem;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: levelup-pop 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue), transparent);
+}
+
+.modal h2 {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(0, 180, 255, 0.2);
+}
+
+.modal select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-md);
+  padding: 11px 14px;
+  color: var(--text-bright);
+  font-size: 14px;
+  font-family: var(--mono);
+  outline: none;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.modal select:focus {
+  border-color: var(--blue);
+}
+
+/* Tipke za odabir težine misije */
+.difficulty-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.diff-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(5, 10, 15, 0.4);
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.diff-btn.active { 
+  box-shadow: inset 0 0 10px rgba(0, 180, 255, 0.1);
+}
+.diff-btn[data-d="easy"].active   { color: var(--teal); border-color: var(--teal); background: rgba(0, 229, 160, 0.05); }
+.diff-btn[data-d="medium"].active { color: var(--amber); border-color: var(--amber); background: rgba(255, 184, 48, 0.05); }
+.diff-btn[data-d="hard"].active   { color: var(--coral); border-color: var(--coral); background: rgba(255, 87, 51, 0.05); }
+
+.diff-btn[data-d="easy"]:hover   { color: var(--teal); border-color: var(--teal); }
+.diff-btn[data-d="medium"]:hover { color: var(--amber); border-color: var(--amber); }
+.diff-btn[data-d="hard"]:hover   { color: var(--coral); border-color: var(--coral); }
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover { 
+  background: var(--bg-hover); 
+  color: var(--text-bright); 
+  border-color: var(--border-bright);
+}
+
+/* Modificirani crveni gumb unutar profila (npr. Odjava) */
+.modal .btn-primary[style*="background-color"] {
+  background: linear-gradient(135deg, rgba(255, 87, 51, 0.15) 0%, transparent 100%) !important;
+  border-color: var(--coral) !important;
+  color: var(--coral) !important;
+}
+.modal .btn-primary[style*="background-color"]:hover {
+  box-shadow: 0 0 15px rgba(255, 87, 51, 0.3) !important;
+  color: var(--text-bright) !important;
+}
+
+/* ── RANG LISTA (Leaderboard terminal) ── */
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 6px;
+  border-bottom: 1px solid rgba(15, 32, 53, 0.4);
+  transition: background 0.2s;
+}
+
+.lb-row:last-child { border-bottom: none; }
+
+.lb-row:hover {
+  background: rgba(0, 180, 255, 0.01);
+}
+
+.lb-rank {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+
+/* Isticanje top tri pozicije na ljestvici */
+.lb-rank.gold   { color: var(--amber); text-shadow: 0 0 8px rgba(255, 184, 48, 0.3); }
+.lb-rank.silver { color: #b0c2cc; }
+.lb-rank.bronze { color: var(--coral); }
+
+.lb-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  background: rgba(0, 180, 255, 0.05);
+  border: 1px solid var(--blue-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--blue);
+  flex-shrink: 0;
+}
+
+.lb-name {
+  flex: 1;
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-bright);
+  letter-spacing: 0.03em;
+}
+
+.lb-lvl {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-right: 10px;
+}
+
+.lb-xp {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* Mreža za plasman igrača na vrhu rang liste */
+[style*="border: 2px solid var(--blue)"] {
+  border-width: 1px !important;
+  box-shadow: 0 0 15px rgba(0, 180, 255, 0.15), inset 0 0 15px rgba(0, 180, 255, 0.05) !important;
+}
+
+/* ── KALENDAR (Sistemska vremenska mreža) ── */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.cal-day-label {
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  padding-bottom: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(6, 13, 20, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cal-day:hover:not(.empty) {
+  border-color: var(--border-bright);
+  color: var(--text-bright);
+  background: var(--bg-hover);
+  transform: scale(1.05);
+}
+
+/* Dani s aktivnim ili kompletiranim zadacima */
+.cal-day.has-tasks { 
+  background: rgba(0, 180, 255, 0.06); 
+  border-color: var(--blue-dim); 
+  color: var(--blue); 
+}
+.cal-day.completed { 
+  background: rgba(0, 229, 160, 0.06); 
+  border-color: var(--teal); 
+  color: var(--teal); 
+  text-shadow: 0 0 6px rgba(0, 229, 160, 0.2);
+}
+.cal-day.today { 
+  border-color: var(--blue); 
+  color: var(--text-bright); 
+  font-weight: 700;
+  box-shadow: 0 0 8px rgba(0, 180, 255, 0.2);
+}
+.cal-day.empty { 
+  opacity: 0.15; 
+  cursor: default; 
+}
+
+/* ── STATISTIČKI DIJAGRAMI (Stupci napajanja) ── */
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 140px;
+  margin-top: 1.5rem;
+  padding: 0 10px;
+}
+
+.chart-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.chart-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--blue) 0%, var(--blue-dim) 100%);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  min-height: 4px;
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(0, 180, 255, 0.2);
+  position: relative;
+}
+
+/* Dodatni sjaj na vrhu svakog stupca u grafikonu */
+.chart-bar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: #fff;
+  box-shadow: 0 0 8px #fff;
+}
+
+.chart-bar-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.chart-bar-val {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* ── POMOĆNE SISTEMSKE LABELE (Globalne oznake) ── */
+[style*="font-size:12px"][style*="text-muted"],
+[style*="font-size:11px"] {
+  font-family: var(--mono) !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+
+.matrix-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#matrixCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5; /* Daje prostora da se tekst ispred jasno vidi */
+}
+.matrix-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+.matrix-status-text {
+  font-family: var(--mono);
+  color: var(--blue);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.matrix-welcome {
+  font-family: var(--mono);
+  color: var(--text-bright);
+  font-size: 28px;
+  letter-spacing: 0.1em;
+}
+/* ── NOVE SEMANTIČKE KLASE (zamjena za inline stilove) ── */
+
+/* Page header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.page-header__left {}
+
+.page-header__greeting {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.page-header__name {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.page-header__right {
+  text-align: right;
+}
+
+.page-header__label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.page-header__level {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--blue);
+}
+
+/* XP card header */
+.xp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.xp-header__right {
+  text-align: right;
+}
+
+.stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.stat-value--blue {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--blue);
+}
+
+.stat-value__sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.xp-levels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.xp-levels__from,
+.xp-levels__to {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--mono);
+}
+
+/* Card label */
+.card__label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.card__icon-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.card__icon-header i {
+  color: var(--blue);
+  font-size: 16px;
+}
+
+/* Card highlight variant */
+.card--highlight {
+  border-color: var(--blue-dim);
+}
+
+/* Profile modal */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1.25rem;
+}
+
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
+}
+
+.profile-name {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.profile-level {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.profile-stats {
+  border-top: 0.5px solid var(--border);
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.profile-stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.profile-stat__label {
+  color: var(--text-muted);
+}
+
+.profile-stat__value {}
+
+.profile-stat__value--blue {
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.profile-stat__value--muted {
+  text-align: right;
+  max-width: 200px;
+  color: var(--text-muted);
+}
+
+/* btn-primary variants */
+.btn-primary--flex {
+  flex: 1;
+}
+
+.btn-primary--danger {
+  border-color: var(--coral) !important;
+  color: var(--coral) !important;
+  background: rgba(255, 87, 51, 0.06) !important;
+}
+
+.btn-primary--danger:hover {
+  box-shadow: 0 0 15px rgba(255, 87, 51, 0.3) !important;
+  color: var(--text-bright) !important;
+}
+
+/* btn-secondary variants */
+.btn-secondary--auto {
+  width: auto;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-secondary--icon {
+  width: auto;
+  padding: 6px 12px;
+}
+
+/* Leaderboard extras */
+.lb-row--me {
+  padding: 0;
+  border-bottom: none;
+}
+
+.lb-row--me:hover {
+  background: transparent;
+}
+
+.lb-rank--me {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--blue);
+  width: 32px;
+}
+
+.lb-info {
+  flex: 1;
+}
+
+.lb-xp--large {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--blue);
+}
+
+/* Month navigation */
+.month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.month-nav__label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Calendar legend */
+.cal-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.cal-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.cal-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.cal-legend__dot--completed { background: var(--teal); }
+.cal-legend__dot--active    { background: var(--blue-dim); }
+.cal-legend__dot--empty     { background: var(--border); }
+
+/* Calendar grid label row */
+.cal-grid--labels {
+  margin-bottom: 6px;
+}
+
+/* Chart labels row */
+.chart-labels {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* Nove kategorije iz data.json */
+.cat-sport     { background: rgba(255, 184, 48, 0.08); color: #ffb830; border: 1px solid rgba(255, 184, 48, 0.25); }
+.cat-socijalno { background: rgba(0, 229, 160, 0.08);  color: #00e5a0; border: 1px solid rgba(0, 229, 160, 0.25); }
+
+/* ── CATEGORY BUTTON HOVER EXPAND ── */
+.category-btn {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  overflow: hidden;
+}
+
+.cat-btn__main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.cat-btn__subs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.25s ease,
+              margin-top 0.25s ease;
+  margin-top: 0;
+}
+
+.category-btn:hover .cat-btn__subs,
+.category-btn.active .cat-btn__subs {
+  max-height: 80px;
+  opacity: 1;
+  margin-top: 10px;
+}
+
+.cat-btn__subs span {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  background: rgba(0, 180, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 2px 6px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.category-btn:hover .cat-btn__subs span,
+.category-btn.active .cat-btn__subs span {
+  color: var(--blue);
+  border-color: rgba(0, 180, 255, 0.2);
+}
+
+.cat-btn__label {
+  font-weight: 600;
+}
+
+/* ── TYPEWRITER CURSOR ── */
+.matrix-cursor {
+  display: inline-block;
+  color: var(--blue, #00b4ff);
+  animation: blink 0.9s step-end infinite;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+/* blink keyframes already exist as 'blink' in onboarding section */
+
+/* ── NAV CLOCK ── */
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav__clock {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* ── SYSTEM MESSAGE ── */
+.system-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(0, 180, 255, 0.03);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue-dim);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-bottom: 16px;
+}
+
+.system-message__tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--blue);
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.system-message__text {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+/* ── STREAK FLAME ANIMATION ── */
+.streak-flame {
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+  color: var(--text-muted);
+}
+
+.streak-flame.flame--active {
+  color: var(--blue);
+  text-shadow: 0 0 10px rgba(0, 180, 255, 0.6);
+  animation: flamePulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes flamePulse {
+  0%   { text-shadow: 0 0 6px rgba(0, 180, 255, 0.4); }
+  100% { text-shadow: 0 0 18px rgba(0, 180, 255, 0.8); }
+}
+
+/* ── DASHBOARD ROW (metrics + circle) ── */
+.dashboard-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.metrics--compact {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+/* ── CIRCULAR PROGRESS ── */
+.circle-progress-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.circle-progress {
+  width: 80px;
+  height: 80px;
+  transform: rotate(-90deg);
+}
+
+.circle-bg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 5;
+}
+
+.circle-track {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 201;
+  stroke-dashoffset: 201;
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 4px rgba(0, 180, 255, 0.5));
+}
+
+.circle-track--done {
+  stroke: var(--teal);
+  filter: drop-shadow(0 0 8px rgba(0, 229, 160, 0.7));
+  animation: circleFlash 0.5s ease;
+}
+
+@keyframes circleFlash {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.circle-progress__inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-progress__pct {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-bright);
+  line-height: 1;
+}
+
+.circle-progress__label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  margin-top: 2px;
+}
+
+/* ── CATEGORY CHIPS (modal) ── */
+.cat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(5, 10, 15, 0.4);
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.chip:hover { border-color: var(--border-bright); color: var(--text-bright); }
+
+.chip--blue.active   { color: var(--blue);   border-color: var(--blue);   background: rgba(0, 180, 255, 0.08); }
+.chip--teal.active   { color: var(--teal);   border-color: var(--teal);   background: rgba(0, 229, 160, 0.08); }
+.chip--purple.active { color: var(--purple); border-color: var(--purple); background: rgba(127,119,221,0.08); }
+.chip--amber.active  { color: var(--amber);  border-color: var(--amber);  background: rgba(255,184,48,0.08); }
+.chip--coral.active  { color: var(--coral);  border-color: var(--coral);  background: rgba(255,87,51,0.08); }
+.chip--pink.active   { color: var(--pink);   border-color: var(--pink);   background: rgba(212,83,126,0.08); }
+.chip--gray.active   { color: #a4c2d5;       border-color: #4a6070;       background: rgba(74,96,112,0.12); }
+
+/* ── LOCKED CONFIRM BUTTON ── */
+.btn-primary--locked {
+  opacity: 0.35;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.btn-primary:not(.btn-primary--locked) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── RANK DISPLAY ── */
+.page-header__level {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--blue);
+}
+
+/* ── RANK UP OVERLAY (same as levelup but different color) ── */
+.lvl-num--rank {
+  font-size: 40px;
+  letter-spacing: 0.2em;
+}

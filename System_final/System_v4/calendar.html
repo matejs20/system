@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System — Calendar</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <span class="nav__logo">SYSTEM</span>
+    <div class="nav__links">
+      <a href="app.html"         class="nav__link">today</a>
+      <a href="calendar.html"    class="nav__link active">calendar</a>
+      <a href="stats.html"       class="nav__link">stats</a>
+      <a href="leaderboard.html" class="nav__link">leaderboard</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- month header -->
+    <div class="month-nav">
+      <button class="btn-secondary btn-secondary--icon" id="prevMonth">
+        <i class="ti ti-chevron-left" aria-hidden="true"></i>
+      </button>
+      <div class="month-nav__label" id="monthLabel">—</div>
+      <button class="btn-secondary btn-secondary--icon" id="nextMonth">
+        <i class="ti ti-chevron-right" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <!-- day labels -->
+    <div class="cal-grid cal-grid--labels">
+      <div class="cal-day-label">mon</div>
+      <div class="cal-day-label">tue</div>
+      <div class="cal-day-label">wed</div>
+      <div class="cal-day-label">thu</div>
+      <div class="cal-day-label">fri</div>
+      <div class="cal-day-label">sat</div>
+      <div class="cal-day-label">sun</div>
+    </div>
+
+    <!-- calendar grid -->
+    <div class="cal-grid" id="calGrid"></div>
+
+    <!-- selected day detail -->
+    <div class="card" id="dayDetail" style="display:none; margin-top:1.5rem;">
+      <div class="card__label" id="dayDetailLabel">—</div>
+      <div id="dayDetailTasks"></div>
+    </div>
+
+    <!-- legend -->
+    <div class="cal-legend">
+      <div class="cal-legend__item">
+        <div class="cal-legend__dot cal-legend__dot--completed"></div>
+        completed
+      </div>
+      <div class="cal-legend__item">
+        <div class="cal-legend__dot cal-legend__dot--active"></div>
+        in progress
+      </div>
+      <div class="cal-legend__item">
+        <div class="cal-legend__dot cal-legend__dot--empty"></div>
+        no tasks
+      </div>
+    </div>
+
+  </main>
+
+  <script type="module" src="js/calendar.js"></script>
+</body>
+</html>
